@@ -5,28 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Designer Level Assessment — Trade Me</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap');
 
   :root {
-    --bg: #f5f4f0;
+    /* Trade Me brand colours */
+    --tm-blurple: #4854D3;
+    --tm-blurple-dark: #0916A6;
+    --tm-blurple-light: #A3A9E9;
+    --tm-blurple-lighter: #D1D4F4;
+    --tm-kowhai: #FFEB33;
+    --tm-kowhai-dark: #FFDA00;
+    --tm-kowhai-light: #FFF599;
+    --tm-kowhai-lighter: #FFFACC;
+    --tm-blue: #007ACD;
+    --tm-blue-light: #279BE9;
+    --tm-blue-lighter: #6BBCF4;
+    --tm-blue-lightest: #CBEAFF;
+    --tm-pink: #DE0270;
+    --tm-charcoal: #2F2C28;
+    --tm-amber: #FFC041;
+    --tm-white: #FFFFFF;
+
+    /* UI tokens mapped to TM brand */
+    --bg: #F4F4F9;
     --surface: #ffffff;
-    --border: rgba(0,0,0,0.1);
-    --border-strong: rgba(0,0,0,0.2);
-    --text: #1a1a18;
-    --text-secondary: #6b6b65;
-    --text-tertiary: #9a9a93;
-    --blue-bg: #e8f0fe;
-    --blue-border: #3b6de8;
-    --blue-text: #1a3a8f;
-    --green-bg: #e4f5ec;
-    --green-border: #1e8a4a;
-    --green-text: #0d4a26;
-    --amber-bg: #fef3e2;
-    --amber-border: #c27c0e;
+    --border: rgba(72,84,211,0.12);
+    --border-strong: rgba(72,84,211,0.28);
+    --text: #2F2C28;
+    --text-secondary: #5a5760;
+    --text-tertiary: #9896a0;
+
+    /* Rater colours — Designer: Blurple, Manager: Kowhai-dark */
+    --blue-bg: var(--tm-blurple-lighter);
+    --blue-border: var(--tm-blurple);
+    --blue-text: var(--tm-blurple-dark);
+    --green-bg: var(--tm-kowhai-lighter);
+    --green-border: var(--tm-kowhai-dark);
+    --green-text: #5a4400;
+
+    /* Level badge colours */
+    --amber-bg: #fff0d6;
+    --amber-border: var(--tm-amber);
     --amber-text: #6b3d00;
-    --purple-bg: #f0eefe;
-    --purple-border: #6b54d4;
-    --purple-text: #2d1f7a;
+    --purple-bg: var(--tm-blurple-lighter);
+    --purple-border: var(--tm-blurple-dark);
+    --purple-text: var(--tm-blurple-dark);
     --red-bg: #feeaea;
     --red-border: #d94040;
     --red-text: #7a1a1a;
@@ -37,7 +60,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Barlow', sans-serif;
     background: var(--bg);
     color: var(--text);
     font-size: 15px;
@@ -46,8 +69,8 @@
   }
 
   header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--tm-blurple);
+    border-bottom: none;
     padding: 20px 24px;
     display: flex;
     align-items: center;
@@ -66,7 +89,7 @@
   .logo-mark {
     width: 32px;
     height: 32px;
-    background: var(--text);
+    background: var(--tm-kowhai);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -77,14 +100,14 @@
 
   .logo-text {
     font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
+    font-weight: 600;
+    color: var(--tm-white);
   }
 
   .logo-sub {
     font-size: 12px;
-    color: var(--text-tertiary);
-    font-family: 'DM Mono', monospace;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Barlow', monospace;
   }
 
   .progress-bar {
@@ -92,8 +115,8 @@
     align-items: center;
     gap: 8px;
     font-size: 12px;
-    color: var(--text-secondary);
-    font-family: 'DM Mono', monospace;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Barlow', sans-serif;
   }
 
   .progress-dots {
@@ -109,9 +132,9 @@
     transition: background 0.2s;
   }
 
-  .progress-dot.d-done { background: var(--blue-border); }
-  .progress-dot.m-done { background: var(--green-border); }
-  .progress-dot.both-done { background: var(--text); }
+  .progress-dot.d-done { background: var(--tm-blurple-light); }
+  .progress-dot.m-done { background: var(--tm-kowhai-dark); }
+  .progress-dot.both-done { background: var(--tm-kowhai); }
 
   main {
     max-width: 720px;
@@ -124,8 +147,12 @@
   }
 
   .intro h1 {
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--tm-blurple-dark);
     margin-bottom: 6px;
   }
 
@@ -192,7 +219,8 @@
   .rater-label {
     font-size: 12px;
     color: var(--text-secondary);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
   }
 
   .levels {
@@ -209,9 +237,10 @@
     cursor: pointer;
     text-align: center;
     transition: all 0.15s;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
     color: var(--text-secondary);
   }
 
@@ -237,14 +266,14 @@
     align-items: center;
     gap: 5px;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 3px 9px;
     border-radius: 99px;
     margin-top: 10px;
     background: var(--red-bg);
     color: var(--red-text);
     border: 1px solid var(--red-border);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow', sans-serif;
   }
 
   .expand-btn {
@@ -260,7 +289,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
     transition: background 0.15s;
   }
 
@@ -306,17 +336,18 @@
 
   .exp-badge {
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 700;
     padding: 2px 9px;
     border-radius: 99px;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.04em;
     border: 1px solid transparent;
   }
 
-  .exp-badge.ic1 { background: var(--blue-bg); color: var(--blue-text); border-color: var(--blue-border); }
-  .exp-badge.ic2 { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
-  .exp-badge.ic3 { background: var(--amber-bg); color: var(--amber-text); border-color: var(--amber-border); }
-  .exp-badge.ic4 { background: var(--purple-bg); color: var(--purple-text); border-color: var(--purple-border); }
+  .exp-badge.ic1 { background: var(--tm-blurple-lighter); color: var(--tm-blurple-dark); border-color: var(--tm-blurple-light); }
+  .exp-badge.ic2 { background: var(--tm-blurple-light); color: var(--tm-blurple-dark); border-color: var(--tm-blurple); }
+  .exp-badge.ic3 { background: var(--tm-kowhai-lighter); color: #5a4400; border-color: var(--tm-kowhai-dark); }
+  .exp-badge.ic4 { background: var(--tm-kowhai); color: var(--tm-charcoal); border-color: var(--tm-kowhai-dark); }
 
   .exp-behaviour {
     font-size: 13px;
@@ -359,11 +390,11 @@
 
   .result-title {
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
     color: var(--text-tertiary);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    font-family: 'Barlow Condensed', sans-serif;
     margin-bottom: 16px;
   }
 
@@ -383,7 +414,10 @@
   .res-card-label {
     font-size: 11px;
     color: var(--text-tertiary);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     margin-bottom: 4px;
   }
 
@@ -393,14 +427,16 @@
     color: var(--text);
   }
 
-  .res-card.d .res-card-val { color: var(--blue-text); }
-  .res-card.m .res-card-val { color: var(--green-text); }
+  .res-card.d .res-card-val { color: var(--tm-blurple); }
+  .res-card.m .res-card-val { color: #5a4400; }
 
   .bars-title {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
     color: var(--text-tertiary);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     margin-bottom: 14px;
   }
 
@@ -431,7 +467,7 @@
     left: 0;
     height: 7px;
     border-radius: 2px;
-    background: var(--blue-border);
+    background: var(--tm-blurple);
     transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
   }
 
@@ -441,7 +477,7 @@
     left: 0;
     height: 7px;
     border-radius: 2px;
-    background: var(--green-border);
+    background: var(--tm-kowhai-dark);
     transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
   }
 
@@ -449,7 +485,8 @@
     font-size: 12px;
     color: var(--text-secondary);
     text-align: right;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
   }
 
   .bar-val.positive { color: var(--green-text); }
@@ -463,12 +500,12 @@
 
   .gaps-title {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
     color: var(--text-tertiary);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow Condensed', sans-serif;
     margin-bottom: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
   }
 
   .gap-item {
@@ -501,34 +538,35 @@
   .print-btn {
     margin-top: 20px;
     padding: 10px 18px;
-    border: 1px solid var(--border-strong);
+    border: none;
     border-radius: var(--radius-sm);
-    background: var(--text);
-    color: #fff;
+    background: var(--tm-blurple);
+    color: var(--tm-white);
     cursor: pointer;
     font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
     transition: opacity 0.15s;
   }
 
-  .print-btn:hover { opacity: 0.8; }
+  .print-btn:hover { background: var(--tm-blurple-dark); }
 
   .reset-btn {
     margin-top: 12px;
     margin-left: 10px;
     padding: 10px 18px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-sm);
     background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
     font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
     transition: all 0.15s;
   }
 
-  .reset-btn:hover { border-color: var(--border-strong); color: var(--text); }
+  .reset-btn:hover { border-color: var(--tm-blurple); color: var(--tm-blurple); }
 
   @media print {
     header { position: static; }
@@ -549,10 +587,10 @@
   <div class="logo">
     <div class="logo-mark">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white"/>
-        <rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
-        <rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
-        <rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.25"/>
+        <rect x="2" y="2" width="6" height="6" rx="1.5" fill="#2F2C28"/>
+        <rect x="10" y="2" width="6" height="6" rx="1.5" fill="#2F2C28" opacity="0.6"/>
+        <rect x="2" y="10" width="6" height="6" rx="1.5" fill="#2F2C28" opacity="0.6"/>
+        <rect x="10" y="10" width="6" height="6" rx="1.5" fill="#2F2C28" opacity="0.3"/>
       </svg>
     </div>
     <div>
