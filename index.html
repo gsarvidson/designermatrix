@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designer Level Assessment — Trade Me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.2);
+    --text: #1a1a18;
+    --text-secondary: #6b6b65;
+    --text-tertiary: #9a9a93;
+    --blue-bg: #e8f0fe;
+    --blue-border: #3b6de8;
+    --blue-text: #1a3a8f;
+    --green-bg: #e4f5ec;
+    --green-border: #1e8a4a;
+    --green-text: #0d4a26;
+    --amber-bg: #fef3e2;
+    --amber-border: #c27c0e;
+    --amber-text: #6b3d00;
+    --purple-bg: #f0eefe;
+    --purple-border: #6b54d4;
+    --purple-text: #2d1f7a;
+    --red-bg: #feeaea;
+    --red-border: #d94040;
+    --red-text: #7a1a1a;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-mark svg { display: block; }
+
+  .logo-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .logo-sub {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .progress-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .progress-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    transition: background 0.2s;
+  }
+
+  .progress-dot.d-done { background: var(--blue-border); }
+  .progress-dot.m-done { background: var(--green-border); }
+  .progress-dot.both-done { background: var(--text); }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  .intro {
+    margin-bottom: 28px;
+  }
+
+  .intro h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .intro p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 520px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .leg {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .card.has-gap {
+    border-color: var(--red-border);
+  }
+
+  .card-body {
+    padding: 18px 20px;
+  }
+
+  .pillar-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .rater-row {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .rater-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .lb {
+    padding: 7px 4px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .lb:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  .lb.sel-d {
+    background: var(--blue-bg);
+    border-color: var(--blue-border);
+    color: var(--blue-text);
+  }
+
+  .lb.sel-m {
+    background: var(--green-bg);
+    border-color: var(--green-border);
+    color: var(--green-text);
+  }
+
+  .gap-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 99px;
+    margin-top: 10px;
+    background: var(--red-bg);
+    color: var(--red-text);
+    border: 1px solid var(--red-border);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .expand-btn {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    text-align: left;
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .expand-btn:hover {
+    background: #eeede9;
+    color: var(--text);
+  }
+
+  .expand-btn .arrow {
+    font-size: 10px;
+    transition: transform 0.2s;
+    color: var(--text-tertiary);
+  }
+
+  .expand-btn.open .arrow {
+    transform: rotate(180deg);
+  }
+
+  .expectations {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .expectations.open {
+    display: block;
+  }
+
+  .exp-level {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-level:last-child {
+    border-bottom: none;
+  }
+
+  .exp-level-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .exp-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 99px;
+    font-family: 'DM Mono', monospace;
+    border: 1px solid transparent;
+  }
+
+  .exp-badge.ic1 { background: var(--blue-bg); color: var(--blue-text); border-color: var(--blue-border); }
+  .exp-badge.ic2 { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+  .exp-badge.ic3 { background: var(--amber-bg); color: var(--amber-text); border-color: var(--amber-border); }
+  .exp-badge.ic4 { background: var(--purple-bg); color: var(--purple-text); border-color: var(--purple-border); }
+
+  .exp-behaviour {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+
+  .exp-example {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    padding: 9px 12px;
+    background: var(--bg);
+    border-left: 2px solid var(--border-strong);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  .exp-example em {
+    font-style: normal;
+    color: var(--text-tertiary);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .result {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 24px;
+    display: none;
+  }
+
+  .result.show {
+    display: block;
+  }
+
+  .result-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 16px;
+  }
+
+  .res-heads {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .res-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+  }
+
+  .res-card-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 4px;
+  }
+
+  .res-card-val {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .res-card.d .res-card-val { color: var(--blue-text); }
+  .res-card.m .res-card-val { color: var(--green-text); }
+
+  .bars-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 14px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 148px 1fr 34px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .bar-track {
+    height: 22px;
+    background: var(--bg);
+    border-radius: 4px;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+
+  .bar-d {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--blue-border);
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .bar-m {
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--green-border);
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .bar-val {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .bar-val.positive { color: var(--green-text); }
+  .bar-val.negative { color: var(--red-text); }
+
+  .gaps-section {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+
+  .gaps-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .gap-item {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+
+  .gap-item-head {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--red-text);
+    margin-bottom: 3px;
+  }
+
+  .gap-item-sub {
+    font-size: 12px;
+    color: var(--red-text);
+    opacity: 0.8;
+  }
+
+  .no-gaps {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 12px 0;
+  }
+
+  .print-btn {
+    margin-top: 20px;
+    padding: 10px 18px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--text);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+
+  .print-btn:hover { opacity: 0.8; }
+
+  .reset-btn {
+    margin-top: 12px;
+    margin-left: 10px;
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .reset-btn:hover { border-color: var(--border-strong); color: var(--text); }
+
+  @media print {
+    header { position: static; }
+    .expand-btn { display: none; }
+    .expectations { display: block !important; }
+    .print-btn, .reset-btn { display: none; }
+  }
+
+  @media (max-width: 520px) {
+    .bar-row { grid-template-columns: 100px 1fr 28px; }
+    .res-heads { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white"/>
+        <rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
+        <rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
+        <rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.25"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">Design careers</div>
+      <div class="logo-sub">Trade Me · IC framework</div>
+    </div>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-dots" id="progress-dots"></div>
+    <span id="progress-label">0 / 10 rated</span>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <h1>Designer level assessment</h1>
+    <p>Rate each pillar independently — designer self-assessment and manager view side by side. Expand any pillar to see what good looks like at each level.</p>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:var(--blue-border)"></div>Designer (self)</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--green-border)"></div>Manager</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--red-border)"></div>Gap of 2+ levels</div>
+    </div>
+  </div>
+
+  <div id="pillars"></div>
+
+  <div class="result" id="result">
+    <div class="result-title">Summary</div>
+    <div class="res-heads">
+      <div class="res-card d">
+        <div class="res-card-label">Designer self-assessment</div>
+        <div class="res-card-val" id="res-d">—</div>
+      </div>
+      <div class="res-card m">
+        <div class="res-card-label">Manager assessment</div>
+        <div class="res-card-val" id="res-m">—</div>
+      </div>
+    </div>
+    <div class="bars-title">Pillar breakdown</div>
+    <div id="bars"></div>
+    <div class="gaps-section" id="gaps-section">
+      <div class="gaps-title">Gaps to discuss</div>
+      <div id="gaps-list"></div>
+    </div>
+    <div>
+      <button class="print-btn" onclick="window.print()">Save / print summary</button>
+      <button class="reset-btn" onclick="resetAll()">Start over</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const pillars = [
+  {
+    id: 'craft', name: '1. Craft & execution',
+    levels: [
+      { badge: 'ic1', label: 'IC1 — Junior designer',
+        behaviour: 'Executes well-defined tasks under close guidance. Learns the Trade Me design system and tools. Uses AI to automate repetitive tasks.',
+        example: 'Completes annotated wireframes for a new Casual Seller listing flow on Koru on brief, incorporating feedback from a senior designer within two revision cycles with no rework needed from engineering.' },
+      { badge: 'ic2', label: 'IC2 — Designer',
+        behaviour: 'Independently owns and delivers high-quality design work for features across product user journeys. Creates effective flows, prototypes, and polished visuals using a whole-product lens.',
+        example: 'Independently delivers end-to-end design for a new Property appraisal request feature — from discovery through to dev-ready SDUI specs — including edge cases, error states, and go-to-market considerations. Minimal rework in QA.' },
+      { badge: 'ic3', label: 'IC3 — Senior designer',
+        behaviour: 'Consistently delivers scalable solutions for complex and ambiguous problems. Proactively resolves UX issues across multiple teams. Mentors others and actively improves the design system.',
+        example: 'Identifies that the Motors dealer enquiry flow has inconsistent UI patterns across web and app. Proposes a scalable SDUI component solution, aligns engineering, and gets it adopted into the Tangram design system for use across verticals.' },
+      { badge: 'ic4', label: 'IC4 — Principal designer',
+        behaviour: 'Defines and leads the design vision for large, ambiguous, multi-faceted problem areas. Sets an exceptionally high bar for craft across multiple teams. Champions AI for pan–Trade Me design practices.',
+        example: 'Defines the design vision for a unified Trade Me seller experience spanning Casual Marketplace and Motors Directs — setting a single interaction language across listing creation, pricing tools, and seller tools. Becomes the cross-vertical reference standard.' }
+    ]
+  },
+  {
+    id: 'customer', name: '2. Customer obsession & insights',
+    levels: [
+      { badge: 'ic1', label: 'IC1 — Junior designer',
+        behaviour: 'Participates in research. Articulates basic user needs. Develops empathy for Trade Me\'s diverse users.',
+        example: 'Participates in three user research sessions for their squad and produces a clear synthesis note — with key themes, direct quotes, and a recommendation — that the team actually references in sprint planning.' },
+      { badge: 'ic2', label: 'IC2 — Designer',
+        behaviour: 'Plans and conducts evaluative research (e.g. usability testing). Synthesises findings into actionable improvements using clear frameworks such as journey maps.',
+        example: 'Runs a usability test on the new job search filter flow. Identifies that job seekers consistently miss the salary range filter due to placement, and the finding directly changes the final design before build.' },
+      { badge: 'ic3', label: 'IC3 — Senior designer',
+        behaviour: 'Integrates quantitative data with qualitative insights to understand the why behind user behaviour. Insights change product decisions, not just inform them.',
+        example: 'Combines Sponsored Listings click-through data with qualitative interviews to reframe the problem from "sellers don\'t know how to use the feature" to "sellers don\'t trust the ROI" — shifting the squad\'s entire product approach for the quarter.' },
+      { badge: 'ic4', label: 'IC4 — Principal designer',
+        behaviour: 'Frames and drives the research strategy for a broad product area. Champions evidence-based understanding of marketplace dynamics that changes strategic direction.',
+        example: 'Commissions and leads a programme of research into how buyer trust is formed across Trade Me\'s marketplaces. Findings reshape how the Audience team approaches safety and verification features, and are presented at a leadership offsite.' }
+    ]
+  },
+  {
+    id: 'strategy', name: '3. Strategic & product thinking',
+    levels: [
+      { badge: 'ic1', label: 'IC1 — Junior designer',
+        behaviour: 'Works within a defined problem space. Understands the immediate goals of their project.',
+        example: 'Can clearly explain why their current feature exists — what user problem it solves, which customer group it serves, and how it connects to the squad\'s OKR.' },
+      { badge: 'ic2', label: 'IC2 — Designer',
+        behaviour: 'Understands the business goals behind their projects. Contributes to framing problems and defining scope for features.',
+        example: 'During discovery for a new Job Alerts feature, identifies that the proposed design solves a notification volume symptom rather than the root cause (low-quality matches). Brings a reframed problem statement to the squad, shifting the direction of the sprint.' },
+      { badge: 'ic3', label: 'IC3 — Senior designer',
+        behaviour: 'Shapes and influences product strategy for their team. Leads the team from ambiguity to clarity, balancing user needs with business goals and technical feasibility.',
+        example: 'Proactively identifies that the Motors private seller and B2B dealer experiences are diverging in ways that will create long-term technical and UX debt. Brings a strategic recommendation to the Head of Product that leads to a unified Motors seller strategy.' },
+      { badge: 'ic4', label: 'IC4 — Principal designer',
+        behaviour: 'Owns and ensures delivery of their design vision aligned to vertical product strategy. Partners with HoP to define strategic frameworks. Identifies and reframes business-critical, systemic problems.',
+        example: 'Partners with Heads of Product across Property, Motors, Marketplace and Jobs to define a shared B2B product strategy — identifying common needs of high-value commercial customers and articulating a platform capability roadmap that serves them all.' }
+    ]
+  },
+  {
+    id: 'comms', name: '4. Communication & collaboration',
+    levels: [
+      { badge: 'ic1', label: 'IC1 — Junior designer',
+        behaviour: 'Clearly articulates design decisions in critiques. Collaborates effectively with immediate partners.',
+        example: 'Presents their design rationale in a squad critique clearly enough that engineers and the PM can articulate the design intent back to them without prompting.' },
+      { badge: 'ic2', label: 'IC2 — Designer',
+        behaviour: 'Proactively communicates project status. Facilitates design discussions within their cross-functional squad. Builds strong relationships across Product, Engineering, Marketing, Sales, and SX.',
+        example: 'Facilitates a cross-functional discovery kick-off for a new Property listing product involving Product, Engineering, Sales, and the SX team. Leaves with an agreed problem statement and clear next steps — all within one session.' },
+      { badge: 'ic3', label: 'IC3 — Senior designer',
+        behaviour: 'Presents work persuasively to stakeholders. Leads critiques and workshops. Tells compelling stories that build empathy for users and conviction in the solution.',
+        example: 'Presents a contentious recommendation to restructure the Motors search experience to a senior stakeholder group. Anticipates commercial objections from the B2B team, prepares data to address them, and leaves the meeting with alignment on a way forward.' },
+      { badge: 'ic4', label: 'IC4 — Principal designer',
+        behaviour: 'Commands a room and builds consensus among senior leaders. Simplifies complexity into clear, actionable narratives. Represents Trade Me design in company-wide and external forums.',
+        example: 'Represents Trade Me\'s design perspective at a company-wide leadership forum on the future of the Marketplace. Their narrative shifts the executive team\'s view on where to invest in FY27.' }
+    ]
+  },
+  {
+    id: 'leadership', name: '5. Leadership & influence',
+    levels: [
+      { badge: 'ic1', label: 'IC1 — Junior designer',
+        behaviour: 'Manages their own tasks reliably. Actively seeks feedback to grow. Demonstrates team citizenship — participates in critique culture and contributes to team norms.',
+        example: 'Proactively flags a blocker on their Koru feature early rather than waiting for a check-in. Actively participates in squad critique — asks questions, offers observations — rather than attending passively.' },
+      { badge: 'ic2', label: 'IC2 — Designer',
+        behaviour: 'Works autonomously on projects. Takes initiative to improve team processes. Begins to mentor junior designers. Is the go-to design expert for their feature area.',
+        example: 'Takes ownership of onboarding a new squad member joining the Jobs team — walks them through the design system, squad rituals, and key stakeholders — without being asked by their manager.' },
+      { badge: 'ic3', label: 'IC3 — Senior designer',
+        behaviour: 'Drives the design process for their team, taking ownership of end-to-end product outcomes. Influences the roadmap and priorities. Actively mentors other designers.',
+        example: 'Runs a fortnightly Motors design critique that becomes a genuine craft forum — not a status update. Junior designers actively prepare for it, and the quality of design rationale across the squad measurably improves over two quarters.' },
+      { badge: 'ic4', label: 'IC4 — Principal designer',
+        behaviour: 'Multiplies the impact of others across multiple teams. Drives broad process improvements. Shapes the culture of the entire design team. Is a trusted advisor to HoPs and senior leaders.',
+        example: 'Identifies that research skills are inconsistently developed across the design org. Designs a lightweight research mentorship programme pairing IC1/IC2 designers with senior researchers. Within two quarters, research quality improves measurably across Jobs, Property, and Marketplace teams.' }
+    ]
+  }
+];
+
+const levelNames = ['IC1 — Junior', 'IC2 — Designer', 'IC3 — Senior', 'IC4 — Principal'];
+const sel = { d: {}, m: {} };
+const expanded = {};
+
+function pick(rater, pillarId, level, e) {
+  e.stopPropagation();
+  sel[rater][pillarId] = level;
+  render();
+}
+
+function toggle(id) {
+  expanded[id] = !expanded[id];
+  render();
+}
+
+function resetAll() {
+  Object.keys(sel.d).forEach(k => delete sel.d[k]);
+  Object.keys(sel.m).forEach(k => delete sel.m[k]);
+  Object.keys(expanded).forEach(k => delete expanded[k]);
+  render();
+}
+
+function render() {
+  const container = document.getElementById('pillars');
+  container.innerHTML = '';
+
+  pillars.forEach(p => {
+    const dv = sel.d[p.id];
+    const mv = sel.m[p.id];
+    const gapFlag = dv && mv && Math.abs(dv - mv) >= 2;
+    const isOpen = expanded[p.id];
+
+    const card = document.createElement('div');
+    card.className = 'card' + (gapFlag ? ' has-gap' : '');
+
+    const levelsHtml = (rater, selVal) => p.levels.map((_, i) =>
+      `<div class="lb${selVal === i + 1 ? ' sel-' + rater : ''}" onclick="pick('${rater}','${p.id}',${i + 1},event)">IC${i + 1}</div>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="card-body">
+        <div class="pillar-title">${p.name}</div>
+        <div class="rater-row">
+          <span class="rater-label">Designer</span>
+          <div class="levels">${levelsHtml('d', dv)}</div>
+        </div>
+        <div class="rater-row">
+          <span class="rater-label">Manager</span>
+          <div class="levels">${levelsHtml('m', mv)}</div>
+        </div>
+        ${gapFlag ? `<div class="gap-badge">Gap: ${Math.abs(dv - mv)} level${Math.abs(dv - mv) > 1 ? 's' : ''} difference</div>` : ''}
+      </div>
+      <button class="expand-btn${isOpen ? ' open' : ''}" onclick="toggle('${p.id}')">
+        <span>What good looks like at each level</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="expectations${isOpen ? ' open' : ''}">
+        ${p.levels.map(l => `
+          <div class="exp-level">
+            <div class="exp-level-header">
+              <span class="exp-badge ${l.badge}">${l.label}</span>
+            </div>
+            <div class="exp-behaviour">${l.behaviour}</div>
+            <div class="exp-example"><em>Example</em>${l.example}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  const dc = Object.keys(sel.d).length;
+  const mc = Object.keys(sel.m).length;
+  const total = dc + mc;
+
+  document.getElementById('progress-label').textContent = `${total} / 10 rated`;
+
+  const dots = document.getElementById('progress-dots');
+  dots.innerHTML = pillars.map(p => {
+    const d = !!sel.d[p.id], m = !!sel.m[p.id];
+    const cls = d && m ? 'both-done' : d ? 'd-done' : m ? 'm-done' : '';
+    return `<div class="progress-dot ${cls}"></div>`;
+  }).join('');
+
+  if (dc === 5 && mc === 5) showResult();
+  else document.getElementById('result').classList.remove('show');
+}
+
+function showResult() {
+  const dVals = pillars.map(p => sel.d[p.id]);
+  const mVals = pillars.map(p => sel.m[p.id]);
+  const da = dVals.reduce((a, b) => a + b, 0) / dVals.length;
+  const ma = mVals.reduce((a, b) => a + b, 0) / mVals.length;
+
+  document.getElementById('res-d').textContent = levelNames[Math.round(da) - 1];
+  document.getElementById('res-m').textContent = levelNames[Math.round(ma) - 1];
+  document.getElementById('result').classList.add('show');
+
+  document.getElementById('bars').innerHTML = pillars.map((p, i) => {
+    const dv = dVals[i], mv = mVals[i];
+    const diff = dv - mv;
+    const valClass = diff > 0 ? 'positive' : diff < 0 ? 'negative' : '';
+    const valText = diff === 0 ? '=' : (diff > 0 ? '+' : '') + diff;
+    return `<div class="bar-row">
+      <span class="bar-label">${p.name.replace(/^\d+\. /, '')}</span>
+      <div class="bar-track">
+        <div class="bar-d" style="width:${(dv / 4) * 100}%"></div>
+        <div class="bar-m" style="width:${(mv / 4) * 100}%"></div>
+      </div>
+      <span class="bar-val ${valClass}">${valText}</span>
+    </div>`;
+  }).join('');
+
+  const gaps = pillars.filter(p => Math.abs(sel.d[p.id] - sel.m[p.id]) >= 2);
+  const gapsSection = document.getElementById('gaps-section');
+  const gapsList = document.getElementById('gaps-list');
+
+  if (gaps.length) {
+    gapsSection.style.display = 'block';
+    gapsList.innerHTML = gaps.map(p => {
+      const dv = sel.d[p.id], mv = sel.m[p.id];
+      const who = dv > mv ? 'Designer rates themselves higher' : 'Manager rates designer higher';
+      return `<div class="gap-item">
+        <div class="gap-item-head">${p.name.replace(/^\d+\. /, '')}</div>
+        <div class="gap-item-sub">${who} — ${levelNames[dv - 1]} vs ${levelNames[mv - 1]}</div>
+      </div>`;
+    }).join('');
+  } else {
+    gapsSection.style.display = 'block';
+    gapsList.innerHTML = '<div class="no-gaps">No significant gaps — ratings are well-aligned across all pillars.</div>';
+  }
+}
+
+render();
+</script>
+</body>
+</html>
